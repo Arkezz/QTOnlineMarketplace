@@ -1,0 +1,44 @@
+#ifndef CUSTOMER_H
+#define CUSTOMER_H
+
+#include <QWidget>
+#include <vector>
+#include <QMessageBox>
+
+namespace Ui {
+class Customer;
+}
+
+class RegisterationWindow;
+class Product;
+
+class Customer :  public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Customer(QWidget *parent = nullptr);
+    void setCustomerInformation(QString name, QString email, QString address, QString number);
+    ~Customer();
+
+    void addProduct(Product*);
+
+private slots:
+    void on_searchProductButton_clicked();
+
+    void on_customerBackButton_clicked();
+
+    void on_addToCartButton_clicked();
+
+    void on_confirmBuyingButton_clicked();
+
+private:
+    Ui::Customer *ui;
+    RegisterationWindow* regWindow;
+    QString name;
+    QString email;
+    QString address;
+    QString number;
+};
+
+#endif // CUSTOMER_H
