@@ -41,50 +41,7 @@ void Customer::setCustomerInformation(QString name, QString email, QString addre
 
 void Customer::on_searchProductButton_clicked()
 {
-    QString total = "";
-    QString nameSearch = ui->searchNameText->text().toLower();
-    QString categorySearch = ui->searchCategoryText->text().toLower();
-    int min = 100;
-    int index = 0;
-    bool category = false;
-    bool autoCorrect = false;
 
-    for (int i = 0; i < products.size(); i++) {
-        if (products[i]->getName() == nameSearch) {
-            ui->productListText->setText(products[i]->getName());
-        }
-        else if (products[i]->getCategory() == categorySearch && categorySearch != "") {
-            total += products[i]->getName() + "\n";
-            category = true;
-        } else {
-            autoCorrect = true;
-            for (int i = 0; i < products.size(); i++) {
-                int distance = 0;
-                int j = 0;
-                int k = 0;
-                while (j < nameSearch.length() && k < products[i]->getName().length()) {
-                    if (nameSearch[j] != products[i]->getName()[k]) {
-                        distance++;
-                    }
-                    j++;
-                    k++;
-                }
-                distance += abs(nameSearch.length() - products[i]->getName().length());
-                if (distance < min) {
-                    min = distance;
-                    index = i;
-                }
-            }
-        }
-    }
-    if(autoCorrect){
-        QMessageBox msg;
-        msg.setText("Did you mean: " + products[index]->getName());
-        msg.exec();
-    }
-    if (category) {
-        ui->productListText->setText(total);
-    }
 }
 
 void Customer::on_addToCartButton_clicked()
@@ -112,13 +69,10 @@ void Customer::on_addToCartButton_clicked()
                     cart.append(new Product(products[i]));
                     cart[cart.size() - 1]->setQuantity(addQuantity);
                     products[i]->setQuantity(products[i]->getQuantity() - addQuantity);
+                    ui->cartListText->addItem(cart[i]->getName());
                 }
             }
         }
-        for (int i = 0; i < cart.size(); i++) {
-            total+= cart[i]->getName() + "\n";
-        }
-        ui->cartListText->setText(total);
     } catch (NoAvailableQuantity& e){
         err.setText(e.what());
         err.exec();
