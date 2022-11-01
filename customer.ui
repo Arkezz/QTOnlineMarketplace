@@ -178,9 +178,6 @@
    <property name="dragDropMode">
     <enum>QAbstractItemView::DragOnly</enum>
    </property>
-   <property name="itemAlignment">
-    <set>Qt::AlignCenter</set>
-   </property>
   </widget>
   <widget class="QListWidget" name="cartListText">
    <property name="geometry">
